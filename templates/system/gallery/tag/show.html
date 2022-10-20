@@ -1,0 +1,132 @@
+{% extends 'system/base.html'%}
+{% block title %}Etiquetas{% endblock title %}
+{% block customcss %}
+    <style>
+    .paginator_inactive {
+        color: #0f0f0f;
+    }
+    </style>
+{% endblock %}
+{% block content %}
+    <div class="d-flex justify-content-custom">
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item ">Etiquetas</li>
+            </ol>
+        </nav>
+    </div>
+
+
+    <div class="d-flex justify-content-custom flex-wrap">
+        <button id="add_tag" type="button" class="btn btn-custom-primary" data-url="{% url 'gallery:add_tag' %}" style="margin-bottom: 10px">
+            <i class="fa fa-plus"></i> Adicionar Etiqueta
+        </button>
+
+        <form action="" method="POST" >
+            {% csrf_token %}
+            <div class="search-button-wrapper">
+                <input type="search" id="" name="search" class="custom-search-input" placeholder="ID | Nome | Area">
+                <button type="submit" class="custom-btn-search"> <span class="custom-btn-search-text">Procurar</span>
+                    <i class="fa fa-search"></i>
+                </button>
+            </div>
+        </form>
+    </div>
+
+
+    {% include 'system/includes/message.html' %}
+
+    {% if tags.count > 0 %}
+{#        <div class="container">#}
+            <div class="table-responive">
+                <table class="table custom-table">
+                    <thead class="custom-thead">
+                        <tr>
+                            <th scope="col" style="width: 5%;">ID</th>
+                            <th scope="col" style="width: 35%;">Nome</th>
+                            <th scope="col" style="width: 15%;">Area</th>
+                            <th scope="col" style="width: 50%;">Ações</th>
+                        </tr>
+                    </thead>
+
+                    <tbody  class="custom-tbody">
+                            {% for tag in page %}
+                                <tr>
+                                    <td class="align-middle">{{tag.id}}</td>
+                                    <td class="align-middle">{{tag.name}}</td>
+                                    <td class="align-middle">{{tag.get_area_display}}</td>
+                                    <td class="align-middle">
+                                        <button type="button" class="btn card-btn-custom-secondary edit_tag" data-url="{% url 'gallery:edit_tag' tag.id %}" style="margin: 0 0 10px 0;">
+                                            <i class="fa fa-edit"></i> Editar
+                                        </button>
+
+                                        <button type="button" class="btn card-btn-custom-danger delete_tag" data-name="{{ tag.name }}" data-url="{% url 'gallery:delete_tag' tag.id %}" style="margin-right: 10px">
+                                            <i class="fa fa-trash-alt"></i> Excluir
+                                        </button>
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                    </tbody>
+                </table>
+
+                <div class="d-flex justify-content-center">
+                    <div class="custom-pagination">
+                        {% if page.has_previous %}
+                            <a href="?page=1">&laquo;</a>
+                            <a href="?page={{ page.previous_page_number }}">{{ page.previous_page_number }}</a>
+                        {% endif %}
+                        <a href="#" class="active">{{ page.number }}</a>
+                        {% if page.has_next %}
+                            <a href="?page={{ page.next_page_number }}">{{ page.next_page_number }}</a>
+                            <a href="?page={{ page.paginator.num_pages }}">&raquo;</a>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+{#        </div>#}
+
+    {% else %}
+        <div class="container" style="display: flex; height: 100%; justify-content: center; text-align: center">
+            <b>Não há etiquetas criadas até o momento.</b>
+        </div>
+    {% endif %}
+
+    <div id="deleteModal" class="modal" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content custom-modal-content">
+                <div id="deleteModalBody" class="modal-body">
+                </div>
+
+                <div class="modal-footer">
+                    <button id="deleteModalConfirm" type="button" class="btn card-btn-custom-danger tx-13">Excluir</button>
+                    <button type="button" class="btn card-btn-custom-secondary" data-bs-dismiss="modal">Fechar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock content %}
+
+{% block contentjs %}
+    <script>
+        $('#add_tag').click(function() {
+            window.location = $(this).attr('data-url');
+        });
+
+        $('.edit_tag').click(function() {
+            window.location = $(this).attr('data-url');
+        });
+
+        $('.delete_tag').click(function() {
+            const url = $(this).attr('data-url');
+            const name = $(this).attr('data-name');
+            $('#deleteModalTitle').text("Excluir Etiqueta:");
+            $('#deleteModalBody').text("Você tem certeza que deseja excluir a Etiqueta: " + name + "?");
+            $('#deleteModalConfirm').attr("data-url", url);
+            $('#deleteModal').modal('show');
+        });
+
+        $( "#deleteModalConfirm" ).click(function () {
+            window.location = $(this).attr("data-url");
+        });
+    </script>
+{% endblock contentjs %}

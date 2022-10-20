@@ -1,0 +1,22 @@
+.navbar-custom {
+    background-color: #1a1a1a;
+}
+
+nav .navbar-nav li a{
+  color: white !important;
+}
+
+.navbar-brand {
+    color: white !important;
+}
+
+.custom-nav-item {
+    visibility: hidden;
+}
+
+.avatar {
+  vertical-align: middle;
+  width: 35px;
+  height: 35px;
+  border-radius: 50%;
+}

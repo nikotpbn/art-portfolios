@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+    <head>
+        {% load static %}
+        <!-- Required meta tags -->
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <!-- Meta -->
+        <meta name="description" content="Portfolio">
+        <meta name="author" content="Nicolau Beltrão Neto">
+
+        <title>Comic Hub</title>
+
+        <!-- Bootstrap core CSS -->
+        <link rel="stylesheet" href="{% static 'bootstrap/css/bootstrap.css' %}">
+
+        <link href="{% static 'fontawesome-free-6.2.0-web/css/all.min.css' %}" rel="stylesheet">
+
+        <!-- Google Fonts -->
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@500&display=swap" rel="stylesheet">
+
+        <!-- Custom CSS -->
+        <link href="{% static 'website/css/theme.css' %}" rel="stylesheet" >
+        <link href="{% static 'website/css/gallery.css' %}" rel="stylesheet" >
+        <link href="{% static 'website/css/hero.css' %}" rel="stylesheet" >
+        <link href="{% static 'website/css/masonry.css' %}" rel="stylesheet" >
+        <link href="{% static 'website/css/contact.css' %}" rel="stylesheet" >
+        <link href="{% static 'website/css/about.css' %}" rel="stylesheet" >
+        
+    </head>
+
+    <body>
+        <section class="main">
+            {% include 'website/includes/nav.html'%}
+            {% block content %}
+
+            {% endblock content %}
+        </section>
+
+        <!-- Thirdparty Plugins -->
+        <script src="{% static 'jquery/jquery.min.js' %}"></script>
+        <script src="{% static 'bootstrap/js/bootstrap.js' %}"></script>
+        <script src="{% static 'jqueryui/jquery-ui.min.js' %}"></script>
+        <script src="{% static 'fontawesome-free-6.2.0-web/js/all.min.js' %}"></script>
+        {% block contentjs %}
+
+        {% endblock contentjs %}
+
+        <footer>
+            <div class="footer-wrapper">
+                <div class="footer-social">
+                    <a href="https://www.linkedin.com/in/nicolau-beltr%C3%A3o-819853102/" target="_blank">
+                        <i class="fa-brands fa-linkedin fa-3x social-icon"></i>
+                    </a>
+                </div>
+            </div>
+        </footer>
+    </body>
+</html>

@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+    <head>
+        <!-- Global site tag (gtag.js) - Google Analytics -->
+        <script async src="https://www.googletagmanager.com/gtag/js?id=284220272"></script>
+        <script>
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){window.dataLayer.push(arguments);}
+            gtag('js', new Date());
+
+            gtag('config', '284220272');
+        </script>
+
+        {% load static %}
+
+        <!-- Required meta tags -->
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <!-- Meta -->
+        <meta name="description" content="Sistema - Portfolio Diogo Ferreira">
+        <meta name="author" content="Nicolau Beltrão Neto">
+
+        <title>Comic Hub - {% block title %}  {% endblock title %}</title>
+
+        <!-- Start favicon -->
+{#            <link rel="apple-touch-icon" sizes="57x57" href="{% static 'favicon/apple-icon-57x57.png' %}">#}
+{#            <link rel="apple-touch-icon" sizes="60x60" href="{% static 'favicon/apple-icon-60x60.png' %}">#}
+{#            <link rel="apple-touch-icon" sizes="72x72" href="{% static 'favicon/apple-icon-72x72.png' %}">#}
+{#            <link rel="apple-touch-icon" sizes="76x76" href="{% static 'favicon/apple-icon-76x76.png' %}">#}
+{#            <link rel="apple-touch-icon" sizes="114x114" href="{% static 'favicon/apple-icon-114x114.png' %}">#}
+{#            <link rel="apple-touch-icon" sizes="120x120" href="{% static 'favicon/apple-icon-120x120.png' %}">#}
+{#            <link rel="apple-touch-icon" sizes="144x144" href="{% static 'favicon/apple-icon-144x144.png' %}">#}
+{#            <link rel="apple-touch-icon" sizes="152x152" href="{% static 'favicon/apple-icon-152x152.png' %}">#}
+{#            <link rel="apple-touch-icon" sizes="180x180" href="{% static 'favicon/apple-icon-180x180.png' %}">#}
+{#            <link rel="icon" type="image/png" sizes="192x192"  href="{% static 'favicon/android-icon-192x192.png' %}">#}
+{#            <link rel="icon" type="image/png" sizes="32x32" href="{% static 'favicon/favicon-32x32.png' %}">#}
+{#            <link rel="icon" type="image/png" sizes="96x96" href="{% static 'favicon/favicon-96x96.png' %}">#}
+{#            <link rel="icon" type="image/png" sizes="16x16" href="{% static 'favicon/favicon-16x16.png' %}">#}
+{#            <link rel="manifest" href="{% static 'favicon/manifest.json' %}">#}
+{#            <meta name="msapplication-TileColor" content="#ffffff">#}
+{#            <meta name="msapplication-TileImage" content="{% static 'favicon/ms-icon-144x144.png' %}">#}
+{#            <meta name="theme-color" content="#ffffff">#}
+        <!-- End favicon -->
+
+        <!-- Bootstrap core CSS -->
+        <link rel="stylesheet" href="{% static 'bootstrap/css/bootstrap.css' %}">
+
+        <link href="{% static 'fontawesome-free-6.2.0-web/css/all.min.css' %}" rel="stylesheet">
+
+        <link href="{% static 'system/custom-css.css' %}" rel="stylesheet">
+        <link href="{% static 'system/sidebar.css' %}" rel="stylesheet">
+        <link href="{% static 'system/navbar.css' %}" rel="stylesheet">
+    </head>
+
+    <body style="background-color: #1f1f1f; color: white;">
+        {% include 'system/includes/navbar.html' %}
+        <div class="wrapper">
+            {% include 'system/includes/sidebar.html' %}
+            <article class="main">
+                <div class="container">
+                    {% block content %}
+
+                    {% endblock content %}
+                </div>
+            </article>
+        </div>
+
+        <!-- Thirdparty Plugins -->
+        <script src="{% static 'jquery/jquery.min.js' %}"></script>
+        <script src="{% static 'bootstrap/js/bootstrap.js' %}"></script>
+        <script src="{% static 'jqueryui/jquery-ui.min.js' %}"></script>
+        <script src="{% static 'fontawesome-free-6.2.0-web/js/all.min.js' %}"></script>
+
+        {% block contentjs %}
+
+        {% endblock contentjs %}
+        <footer>
+        </footer>
+    </body>
+</html>

@@ -1,0 +1,33 @@
+{% extends 'website/base.html'%}
+
+{% block content %}
+    <div class="container contact-wrapper">
+
+        {% include 'website/includes/message.html' %}
+
+        <h1 class="form-label">Contact</h1>
+
+        <form action="{% url 'website:contact' %}" style="display: flex; flex-direction: column" method="POST">
+
+            {% csrf_token %}
+
+{#            <label class="form-label" for="fname">{{ form.name.label }}</label>#}
+            <input class="form-text-input" type="text" id="fname" name="name" placeholder="Nome..">
+
+{#            <label class="form-label" for="lname">{{ form.last_name.label }}</label>#}
+            <input class="form-text-input" type="text" id="lname" name="last_name" placeholder="Sobrenome..">
+
+            <input class="form-text-input" type="email" id="email" name="from_email" placeholder="Email..">
+
+{#            <label class="form-label" for="mail_subject">{{ form.topic.label }}</label>#}
+            <input class="form-text-input" type="text" id="mail_subject" name="subject" placeholder="Assunto..">
+
+
+{#            <label class="form-label" for="mail_body">{{ form.subject.label }}</label>#}
+            <textarea class="form-text-area-input" id="mail_body" name="message" placeholder="Escreva mais sobre o assunto..." style="height:200px"></textarea>
+
+            <input type="submit" class="form-button" value="Submit">
+
+        </form>
+    </div>
+{% endblock content %}

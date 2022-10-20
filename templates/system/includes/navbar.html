@@ -1,0 +1,72 @@
+{% load static %}
+            <nav class="navbar navbar-expand-lg navbar-dark sticky-top" style="background-color: rgba(0,0,0,0.5)">
+                <div class="container-fluid">
+                    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+
+                    <div class="collapse navbar-collapse hidden-custom" style="justify-content: center;" id="navbarNavAltMarkup">
+                        <div class="navbar-nav">
+                            <a class="nav-link {% if 'system/dashboard' in request.build_absolute_uri %} active {% endif %}" href="{% url 'gallery:dashboard' %}">
+                                <span class="fas fa-chalkboard"></span> Dashboard</a>
+
+                            <a class="nav-link {% if '/system/gallery/show/art' in request.build_absolute_uri or '/gallery/add/art' in request.build_absolute_uri or '/gallery/wart/tag/' in request.build_absolute_uri %} active {% endif %}" href="{% url 'gallery:show_art' %}">
+                                <span class="fas fa-images"></span>
+                                Artes
+                            </a>
+
+                            <a class="nav-link {% if 'tag' in request.build_absolute_uri or '/gallery/add/tag' in request.build_absolute_uri %} active {% endif %}" href="{% url 'gallery:show_tag' %}">
+                                <span class="fa fa-tags"></span>
+                                Etiquetas
+                            </a>
+
+                            <a class="nav-link {% if 'exhibition' in request.build_absolute_uri %} active {% endif %}" href="{% url 'gallery:show_exhibition' %}">
+                                <span class="fas fa-hotel"></span>
+                                Exposições
+                            </a>
+
+                            <a class="nav-link {% if 'change_password' in request.build_absolute_uri %} active {% endif %}" href="{% url 'system:change_password' %}">
+                                <span class="fas fa-key"></span>
+                                Alterar Senha
+                            </a>
+
+                            <a class="nav-link" href="{% url 'system:logout' %}">
+                                <span class="fas fa-sign-out-alt"></span>
+                                Sair
+                            </a>
+                        </div>
+                    </div>
+
+                    <ul class="navbar-nav hidden-custom-reverse">
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle sidebar-link" href="#" id="navbarDarkDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                              <span class="fas fa-cog"></span>
+                              Configurações
+                            </a>
+
+                            <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="navbarDarkDropdownMenuLink">
+                                <li>
+                                    <a class="dropdown-item" href="{% url 'system:change_password' %}">
+                                        <span class="fas fa-key"></span>
+                                        Alterar Senha
+                                    </a>
+                                </li>
+
+                                <li>
+                                    <a class="dropdown-item" href="{% url 'system:logout' %}">
+                                        <span class="fas fa-sign-out-alt"></span>
+                                        Sair
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+
+
+                    {% if request.session.user.image is None%}
+                        <img src="{{ request.session.user.image }}" alt="" class="avatar hidden-custom-reverse" style="margin: 0 10px 0 10px;">
+                    {% else %}
+                        <img src="{% static 'avatar-replacement.jpg' %}" alt="" class="avatar hidden-custom-reverse" style="margin: 0 10px 0 10px;">
+                    {% endif %}
+                </div>
+            </nav>

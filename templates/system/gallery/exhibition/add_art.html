@@ -1,0 +1,82 @@
+{% extends 'system/base.html' %}
+{% load static %}
+
+{% block content %}
+    {% include 'system/includes/message.html' %}
+
+    <div class="d-flex justify-content-custom">
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="{% url 'gallery:show_exhibition' %}">Exposições</a></li>
+                <li class="breadcrumb-item"><a href="{% url 'gallery:exhibition_show_related' exhibition.id %}">{{ exhibition.name }}</a></li>
+                <li class="breadcrumb-item active" aria-current="page">Relacionar Artes</li>
+            </ol>
+        </nav>
+    </div>
+
+    <div class="d-flex justify-content-custom">
+        <div class="d-flex">
+            <button id="back" type="button" class="btn btn-custom-primary" data-url="{% url 'gallery:exhibition_show_related' exhibition.id %}">
+                    <i class="fa fa-arrow-left"></i> Voltar
+            </button>
+        </div>
+        {% if arts.count > 0 %}
+         <form action="{% url 'gallery:exhibition_add_art' exhibition.id  %}" method="POST" >
+            {% csrf_token %}
+            <div class="search-button-wrapper">
+                <input type="search" id="" name="search" class="custom-search-input" placeholder="Título | Subtítulo | Descrição">
+                <button type="submit" class="custom-btn-search"> <span class="custom-btn-search-text">Procurar</span>
+                    <i class="fa fa-search"></i>
+                </button>
+            </div>
+        </form>
+        {% endif %}
+    </div>
+
+    {% if arts.count > 0 %}
+        <div class="d-flex justify-content-custom flex-wrap">
+            {% for art in page %}
+                <div class="card">
+                    <img class="card-img-top custom-card-image" src="{{ art.image.url }}" alt="Card image cap">
+                    <div class="card-body">
+                        <h5 class="card-title text-center">{{ art.title }}</h5>
+                        <p>
+                            <button type="button" class="btn card-btn-custom-primary relate-art" data-url="{% url 'gallery:exhibition_relate_art' exhibition.id art.id %}">
+                                <i class="fas fa-plus" style=""></i> Adicionar
+                            </button>
+                        </p>
+                        <p class="card-text text-center"><small class="text-muted">Adicionado em {{ art.created_at }}</small></p>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+
+        <div class="d-flex justify-content-center">
+            <div class="custom-pagination">
+                {% if page.has_previous %}
+                    <a href="?page=1">&laquo;</a>
+                    <a href="?page={{ page.previous_page_number }}">{{ page.previous_page_number }}</a>
+                {% endif %}
+                <a href="#" class="active">{{ page.number }}</a>
+                {% if page.has_next %}
+                    <a href="?page={{ page.next_page_number }}">{{ page.next_page_number }}</a>
+                    <a href="?page={{ page.paginator.num_pages }}">&raquo;</a>
+                {% endif %}
+            </div>
+        </div>
+    {% else %}
+        Todas as obras já foram relacionadas à esta galeria.
+    {% endif %}
+{% endblock content %}
+
+{% block contentjs %}
+    <script>
+        $('#back').click(function() {
+            window.location = $(this).attr('data-url');
+        });
+
+        $('.relate-art').click(function() {
+           window.location = $(this).attr('data-url')
+        });
+    </script>
+{% endblock contentjs %}

@@ -1,0 +1,116 @@
+{% extends 'system/base.html' %}
+
+{% load static %}
+{% block title %}Galerias{% endblock title %}
+
+{% block content %}
+    {% include 'system/includes/message.html' %}
+
+    <div class="d-flex justify-content-custom">
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item ">Exposições</li>
+            </ol>
+        </nav>
+    </div>
+
+    <div class="d-flex justify-content-custom">
+        <div class="d-flex">
+            <button id="add_gallery" type="button" class="btn btn-custom-primary" data-url="{% url 'gallery:add_exhibition' %}" style="margin-bottom: 10px">
+                <i class="fa fa-plus"></i>
+                Adicionar Exposição
+            </button>
+        </div>
+    </div>
+    {% if exhibitions.count > 0 %}
+        <div class="d-flex justify-content-custom flex-wrap">
+            {% for exhibition in page %}
+                <div class="card">
+                    <img class="card-img-top custom-card-image" src="{{ exhibition.cover.url }}" alt="Card image cap">
+                    <div class="card-body">
+                        <h5 class="card-title text-center">{{ exhibition.name }}</h5>
+    {#                            <p class="card-text">{{ art.description }}</p>#}
+                        <p>
+                            <button type="button" class="btn card-btn-custom-primary show_related_arts" data-url="{% url 'gallery:exhibition_show_related' exhibition.id%}">
+                                <i class="fa fa-image"></i> Gerenciar
+                            </button>
+                        </p>
+                        <p>
+                            <button type="button" class="btn card-btn-custom-secondary edit_exhibition" data-url="{% url 'gallery:edit_exhibition' exhibition.id %}">
+                                <i class="fa fa-edit"></i> Editar
+                            </button>
+                        </p>
+                        <p>
+                            <button type="button" class="btn card-btn-custom-danger delete_exhibition" data-name="{{ exhibition.name }}" data-url="{% url 'gallery:delete_exhibition' exhibition.id %}">
+                                <i class="fa fa-trash-alt"></i> Excluir
+                            </button>
+                        </p>
+
+                        <p class="card-text text-center"><small class="text-muted"># obras relacionadas: {{ exhibition.num_works }}</small></p>
+                        <p class="card-text text-center"><small class="text-muted">Criado em {{ exhibition.created_at }}</small></p>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+
+        <div class="d-flex justify-content-center">
+            <div class="custom-pagination">
+                {% if page.has_previous %}
+                    <a href="?page=1">&laquo;</a>
+                    <a href="?page={{ page.previous_page_number }}">{{ page.previous_page_number }}</a>
+                {% endif %}
+                <a href="#" class="active">{{ page.number }}</a>
+                {% if page.has_next %}
+                    <a href="?page={{ page.next_page_number }}">{{ page.next_page_number }}</a>
+                    <a href="?page={{ page.paginator.num_pages }}">&raquo;</a>
+                {% endif %}
+            </div>
+        </div>
+    {% else %}
+            Não existem exposições/galerias criadas
+    {% endif %}
+
+    <div id="deleteModal" class="modal" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content custom-modal-content">
+                <div id="deleteModalBody" class="modal-body">
+                </div>
+
+                <div class="modal-footer">
+                    <button id="deleteModalConfirm" type="button" class="btn card-btn-custom-danger tx-13">Excluir</button>
+                    <button type="button" class="btn card-btn-custom-secondary" data-bs-dismiss="modal">Fechar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock content %}
+
+{% block contentjs %}
+    <script>
+        $('#add_gallery').click(function() {
+            window.location = $(this).attr('data-url');
+        });
+
+        $('.edit_exhibition').click(function () {
+            window.location = $(this).attr('data-url');
+
+        });
+
+        $('.delete_exhibition').click(function() {
+            const url = $(this).attr('data-url');
+            const name = $(this).attr('data-name');
+            $('#deleteModalTitle').text("Excluir Exposição:");
+            $('#deleteModalBody').text("Você tem certeza que deseja excluir a exposição: " + name + "?");
+            $('#deleteModalConfirm').attr("data-url", url);
+            $('#deleteModal').modal('show');
+        });
+
+        $( "#deleteModalConfirm" ).click(function () {
+            window.location = $(this).attr("data-url");
+        });
+
+        $('.show_related_arts').click(function() {
+            window.location = $(this).attr('data-url');
+        });
+    </script>
+{% endblock contentjs %}

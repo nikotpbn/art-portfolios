@@ -1,0 +1,60 @@
+.masonry-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.masonry-wrapper {
+    margin-top: 70px;
+    margin-bottom: 30px;
+    display: flex;
+    flex-flow: row wrap;
+    width: 90%;
+}
+
+.masonry-image-container {
+    display: flex;
+    height: auto;
+    width: 24%;
+    margin-bottom: 10px;
+    align-items: center;
+    justify-content: center;
+    margin-left: 1%;
+}
+
+.masonry-image {
+    width: 100%;
+    height: 100%;
+    min-height: 600px;
+    object-fit: cover;
+    opacity: 0.7;
+}
+
+.text {
+    color: white;
+    font-size: 16px;
+    padding: 16px 32px;
+  }
+
+.masonry-image:hover {
+    opacity: 1;
+}
+
+.masonry-image-container:hover {
+    opacity: 1;
+}
+
+.middle {
+    transition: .5s ease;
+    opacity: 0;
+    display: flex; 
+    justify-content: center; 
+    align-items: center;
+    position: absolute;
+}
+
+.masonry-image-container:hover .middle {
+    opacity: 1;
+}
+
+

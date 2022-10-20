@@ -1,0 +1,58 @@
+{% extends 'system/base.html'%}
+
+{% block content %}
+
+    {% include 'system/includes/message.html' %}
+
+    <div class="d-flex justify-content-custom">
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="{% url 'gallery:show_tag' %}">Etiquetas</a></li>
+                <li class="breadcrumb-item "> {{ tag.name }} </li>
+                <li class="breadcrumb-item "> Editar </li>
+            </ol>
+        </nav>
+    </div>
+
+    <form id="tag_form" action="{% url 'gallery:edit_tag' tag.id %}" method="POST">
+
+        {% csrf_token %}
+
+        <div class="d-flex flex-wrap">
+            <label for="name">{{ form.name.label }}</label>
+            <input type="text" class="form-control bg-custom" name="name" value="{{ form.name.value }}" required>
+
+
+            <label for="area">{{ form.area.label }}</label>
+            <select class="form-select bg-custom" name="area" aria-label="Default select example">
+                {% for area in form.fields.area.widget.choices %}
+                    <option value="{{ area.0 }}" {% if form.area.value == area.0|stringformat:"s" %} selected="selected" {% endif %}>{{ area.1 }}</option>
+                {% endfor %}
+            </select>
+        </div>
+
+        <div class="d-flex justify-content-between flex-wrap">
+            <button id="save_tag" type="button" class="btn btn-custom-primary">
+                <span class="fas fa-save"></span>
+                Salvar
+            </button>
+
+            <button id="back" type="button" class="btn btn-custom-primary" data-url="{% url 'gallery:show_tag' %}">
+                <span class="fa fa-arrow-left"></span> Voltar
+            </button>
+        </div>
+    </form>
+{% endblock content %}
+
+{% block contentjs %}
+    <script>
+        $('#back').click(function() {
+            window.location = $(this).data('url');
+        });
+
+        $('#save_tag').click(function() {
+            $('#tag_form').submit();
+        });
+
+    </script>
+{% endblock contentjs %}

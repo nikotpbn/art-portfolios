@@ -1,0 +1,9 @@
+[
+    {
+      "origin": ["https://portfolios-website.ew.r.appspot.com"],
+      "method": ["GET"],
+      "responseHeader": ["Content-Type"],
+      "maxAgeSeconds": 3600
+    }
+]
+

@@ -1,0 +1,94 @@
+<!doctype html>
+
+<html lang="en">
+  <head>
+    {% load static %}
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="Mark Otto, Jacob Thornton, and Bootstrap contributors">
+    <meta name="generator" content="Jekyll v4.1.1">
+
+      <title>Signin Template · Bootstrap</title>
+
+    <!-- Bootstrap core CSS -->
+    <link rel="stylesheet" href="{% static 'bootstrap/css/bootstrap.css' %}">
+    <link href="{% static 'fontawesome-free-6.2.0-web/css/all.min.css' %}" rel="stylesheet">
+
+    <style>
+        html,
+        body {
+          height: 100%;
+        }
+
+        body {
+          display: -ms-flexbox;
+          display: flex;
+          -ms-flex-align: center;
+          align-items: center;
+          padding-top: 40px;
+          padding-bottom: 40px;
+          background-color: #1a1a1a;
+        }
+
+        .form-signin {
+          width: 100%;
+          max-width: 330px;
+          padding: 15px;
+          margin: auto;
+        }
+        .form-signin .checkbox {
+          font-weight: 400;
+        }
+        .form-signin .form-control {
+          position: relative;
+          box-sizing: border-box;
+          height: auto;
+          padding: 10px;
+          font-size: 16px;
+        }
+        .form-signin .form-control:focus {
+          z-index: 2;
+        }
+        .form-signin input[type="email"] {
+          margin-bottom: -1px;
+          border-bottom-right-radius: 0;
+          border-bottom-left-radius: 0;
+            background: #1f1f1f;
+        }
+        .form-signin input[type="password"] {
+          margin-bottom: 10px;
+          border-top-left-radius: 0;
+          border-top-right-radius: 0;
+            background: #1f1f1f;
+        }
+    </style>
+  </head>
+
+<body class="text-center">
+    <form class="form-signin" action="{% url 'system:login' %}" method="POST">
+
+        {% csrf_token %}
+
+        <i class="fa-brands fa-redhat fa-4x" style="color: rgba(255, 255, 255, 0.75);"></i>
+        <h1 class="h3 mb-3 font-weight-normal" style="color: rgba(255,255,255, 0.67);">Log in</h1>
+        <div class="form-group">
+            <input name="email" type="email" class="form-control" placeholder="Email" style="color: white" {% if email != '' %} value="{{ email }}" {% endif %}>
+        </div>
+        <div class="form-group">
+            <input name="password" type="password" class="form-control" placeholder="Senha" style="color: white">
+        </div>
+        <button class="btn btn-lg btn-block" style="    background: rgba(255,255,255, 0.87);
+        color: rgba(8, 8, 8, 0.5);
+        min-width: 275px;">Entrar</button>
+
+        <div style="padding-top: 10px">
+            {% include 'system/includes/message.html' %}
+        </div>
+    </form>
+</body>
+</html>
+
+<script>
+
+</script>

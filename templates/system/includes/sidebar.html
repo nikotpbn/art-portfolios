@@ -1,0 +1,32 @@
+<aside class="aside custom-sidebar">
+    <div class="sidebar-wrapper">
+
+        <div class="sidebar-item">
+            <a class="sidebar-link  {% if 'dashboard' in request.build_absolute_uri %} sidebar-link-active {% endif %}" href="{% url 'gallery:dashboard' %}">
+                <span class="fas fa-chalkboard"></span>
+                    Dashboard
+            </a>
+        </div>
+
+        <div class="sidebar-item">
+            <a class="sidebar-link {% if '/system/gallery/show/art' in request.build_absolute_uri in request.build_absolute_uri %} sidebar-link-active {% endif %}" href="{% url 'gallery:show_art' %}">
+              <span class="fas fa-images"></span>
+              Artes
+            </a>
+        </div>
+
+        <div class="sidebar-item">
+            <a class="sidebar-link {% if 'tag' in request.build_absolute_uri in request.build_absolute_uri %} sidebar-link-active {% endif %}" href="{% url 'gallery:show_tag' %}">
+              <span class="fa fa-tags"></span>
+              Etiquetas
+            </a>
+        </div>
+
+        <div class="sidebar-item">
+            <a class="sidebar-link {% if 'exhibition' in request.build_absolute_uri %} sidebar-link-active {% endif %}" href="{% url 'gallery:show_exhibition' %}">
+              <span class="fas fa-hotel"></span>
+              Galerias <span class="sr-only">(current)</span>
+            </a>
+        </div>
+    </div>
+</aside>

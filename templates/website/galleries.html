@@ -1,0 +1,25 @@
+{% extends 'website/base.html'%}
+
+{% block content %}
+    {% if galleries.count > 0 %}
+    <div class="galleries">
+       {% for gallery in galleries %}
+            <div class="card" style="width: 18rem;">
+                <img class="card-image" src="{{ gallery.cover.url }}" alt="Card image cap">
+                <div class="card-body">
+                    <h5 class="card-title">{{ gallery.name }}</h5>
+                    <p class="card-text card-description"></p>
+                    <a href="{% url 'website:gallery' gallery.id %}" class="btn btn-card">Entrar</a>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+    {% else %}
+        <div class="d-flex" style="height: 100%; justify-content: center; align-items: center; text-align: center; color: rgba(255, 255, 255, 0.75);">
+            <h1> Ainda não existem galerias. </h1>
+        </div>
+    {% endif %}
+{% endblock content %}
+
+{% block contentjs %}
+{% endblock contentjs %}

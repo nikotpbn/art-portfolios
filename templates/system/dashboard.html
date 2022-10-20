@@ -1,0 +1,36 @@
+{% extends 'system/base.html'%}
+
+{% load static %}
+{% block title %}Dashboard{% endblock title %}
+
+{% block content %}
+
+    {% include 'system/includes/message.html' %}
+
+    <div class="d-flex justify-content-custom">
+        <div class="card" style="max-width: 18rem;">
+            <div class="card-header">artes adicionadas</div>
+            <div class="card-body">
+                <h5 class="card-title">{{ arts }}</h5>
+            </div>
+        </div>
+
+        <div class="card" style="max-width: 18rem;">
+            <div class="card-header">galerias criadas</div>
+            <div class="card-body">
+                <h5 class="card-title">{{ exhibitions }}</h5>
+            </div>
+        </div>
+
+        <div class="card" style="max-width: 18rem;">
+            <div class="card-header">Obras sem galerias</div>
+            <div class="card-body">
+                <h5 class="card-title">{{ unrelated_arts }}</h5>
+            </div>
+        </div>
+    </div>
+
+
+{% endblock content %}
+
+

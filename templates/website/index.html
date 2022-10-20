@@ -1,0 +1,47 @@
+{% extends 'website/base.html'%}
+
+{% load static %}
+
+{% block content %}
+{% if most_recent_arts.count > 0 %}
+    <div class="masonry-container">
+        <div class="masonry-wrapper" id="most-recent">
+            <!-- {% for art in most_recent_arts %}
+                <img src="{{ art.image.url }}" alt="image" class="masonry-image"/>
+            {% endfor %} -->
+
+            {% for art in most_recent_arts %}
+                <div class="masonry-image-container">
+                    
+                    <a href="{{ art.image.url }}" target="_blank">
+                        <img src="{{ art.image.url }}" alt="image" class="masonry-image"/>
+                    </a>
+
+                    </div>
+            {% endfor %}
+        </div>
+    </div>
+{% else %}
+    <div class="d-flex" style="height: 100%; justify-content: center; align-items: center; text-align: center; color: rgba(255, 255, 255, 0.75);">
+        <h1> Ainda não existem artes. </h1>
+    </div>
+{% endif %}
+
+{% endblock content %}
+
+{% block contentjs %}
+        <script>
+            function jumpToMenu() {
+                const el = document.getElementById("most-recent");
+                el.scrollIntoView({
+                    block: "start",
+                    behavior: "smooth"
+                });
+            }
+
+            $('.masonry-image').on('click', function() {
+                url = $(this).attr('image-url');
+                console.log(url)
+            });
+        </script>
+{% endblock contentjs %}

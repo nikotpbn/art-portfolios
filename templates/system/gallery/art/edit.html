@@ -1,0 +1,62 @@
+{% extends 'system/base.html'%}
+
+{% block content %}
+    <nav aria-label="breadcrumb">
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="{% url 'gallery:show_art' %}">Artes</a></li>
+        <li class="breadcrumb-item active" aria-current="page">Editar</li>
+      </ol>
+    </nav>
+
+    {% include 'system/includes/message.html' %}
+
+    <form id="art_form" action="{% url 'gallery:edit_art' art.id %}" method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+        <div class="d-flex flex-wrap">
+            <label for="Title">{{ form.title.label }}</label>
+            <input type="text" class="form-control bg-custom" name="title" value="{{ form.title.value }}" required>
+
+            <label for="Subtitle">{{ form.subtitle.label }}</label>
+            <input type="text" class="form-control bg-custom" name="subtitle" value="{{ form.subtitle.value }}" required>
+
+            <label for="Type">{{ form.type.label }}</label>
+            <select name="type" class="form-select bg-custom" aria-label="Default select example">
+                {% for type in form.fields.type.widget.choices %}
+                    <option value="{{ type.0 }}" {% if form.type.value == type.0|stringformat:"s" %} selected="selected" {% endif %}>{{ type.1 }}</option>
+                {% endfor %}
+            </select>
+
+            <label for="textarea">{{ form.description.label }}</label>
+            <textarea class="form-control bg-custom" id="textarea" name="description" rows="3" style="margin-bottom: 10px">{{ form.description.value }}</textarea>
+        </div>
+
+        <div class="d-flex justify-content-between flex-wrap">
+            <button id="save_art" type="button" class="btn btn-custom-primary">
+                <span class="fas fa-save"></span>
+                Salvar
+            </button>
+
+            <button id="back" type="button" class="btn btn-custom-primary" data-url="{% url 'gallery:show_art' %}">
+                <span class="fa fa-arrow-left"></span> Voltar
+            </button>
+        </div>
+    </form>
+
+{% endblock content %}
+
+{% block contentjs %}
+    <script>
+        $('#save_art').click(function() {
+            $('#art_form').submit();
+        });
+
+        $('#back').click(function() {
+            window.location = "{% url 'gallery:show_art' %}";
+        });
+
+        $( "#customFile" ).change(function () {
+          const filename = $( "#customFile" ).val().split('\\').pop();
+          $( "#customFileLabel" ).html(filename)
+        });
+    </script>
+{% endblock contentjs %}

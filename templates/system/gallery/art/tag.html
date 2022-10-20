@@ -1,0 +1,110 @@
+{% extends 'system/base.html' %}
+
+{% load static %}
+
+{% block customcss %}
+<style>
+
+</style>
+{% endblock %}
+
+{% block content %}
+    <div class="d-flex justify-content-custom">
+        <nav aria-label="breadcrumb">
+          <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{% url 'gallery:show_art' %}">Artes</a></li>
+            <li class="breadcrumb-item"> {{ art.title }} </li>
+            <li class="breadcrumb-item active" aria-current="page">Gerenciar etiquetas</li>
+          </ol>
+        </nav>
+    </div>
+
+    {% include 'system/includes/message.html' %}
+
+    <div class="msg"></div>
+
+    <div class="d-flex justify-content-custom">
+        <button id="back" type="button" class="btn btn-custom-primary" data-url="{% url 'gallery:show_art' %}">
+            <span class="fa fa-arrow-left"></span> Voltar
+        </button>
+    </div>
+
+
+    <div class="d-flex tag-container">
+        <div class="d-flex tag-accordion">
+                <div class="accordion">
+                    {% for area, values in area_dict.items %}
+                          <button class="btn btn-custom-primary" style="width: 100%" type="button" data-toggle="collapse" data-target="{{ area }}" aria-expanded="false" aria-controls="collapseExample">
+                            {{ area }}
+                          </button>
+                        <div id="{{ area }}">
+                            {% for tag in values.tag_list %}
+                                <div id="sw" class="custom-control custom-switch" style="text-align: left">
+                                    <input data-onstyle="dark" data-art-id="{{ art.id }}" data-tag-id="{{ tag.0 }}" type="checkbox" class="custom-control-input tag_handler" name="sw" value="" id="{{ tag.0 }}" {% if tag.0 in art_tags %}checked{% endif %}>
+                                    <label class="custom-control-label" for="{{ tag.0 }}">{{ tag.1 }}</label>
+                                </div>
+                            {% endfor %}
+                        </div>
+                    {% endfor %}
+                </div>
+        </div>
+
+
+        <div class="d-flex justify-content-center" style="flex: 1">
+            <img src="{{ art.image.url }}" class="tag-scree-image" alt="Responsive image">
+        </div>
+    </div>
+
+    <div class="modal" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content bg-transparent">
+                <div class="modal-body">
+                    <p>Modal body text goes here.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock content %}
+
+{% block contentjs %}
+  <script>
+    $('.accordion').accordion({
+        heightStyle: 'content'
+    });
+
+    $( function() {
+        $( "#accordion" ).accordion();
+    } );
+
+   $('#back').click(function(){
+       window.location = $(this).attr('data-url');
+    });
+
+   $('.tag_handler').change(function () {
+        const id_art = $(this).attr("data-art-id");
+        const id_tag = $(this).attr("data-tag-id");
+        $.ajax({
+            url: "{% url 'gallery:handle_art_tag' %}",
+            type: 'POST',
+            data: {
+				'csrfmiddlewaretoken': '{{ csrf_token }}',
+                'id_tag': id_tag,
+                'id_art': id_art
+            },
+            dataType: 'json',
+            success: function (data) {
+                $('.modal').show();
+                setTimeout(function(){
+                  $('.modal').hide()
+                }, 500);
+                if (data.save) {
+                    $('.modal-body').html("<div id='permissionMsg' class='alert alert-outline alert-success' style='margin-left:0'><strong>Etiqueta adicionada com sucesso</strong></div>");
+                }
+                if (data.delete) {
+                    $('.modal-body').html("<div id='permissionMsg' class='alert alert-outline alert-success' style='margin-left:0'><strong>Etiqueta removida com sucesso</strong></div>");
+                }
+            }
+        });
+    });
+  </script>
+{% endblock contentjs %}

@@ -1,0 +1,14 @@
+__pycache__/
+
+extra/*
+media/*
+venv/*
+
+.idea
+.env
+.gcloudignore
+
+dumps.json
+cloud_sql_proxy
+cors_settings.json
+portfolios-website-294b19ad50b8.json

@@ -1,0 +1,128 @@
+{% extends 'system/base.html'%}
+
+{% load static %}
+{% block title %}Artes{% endblock title %}
+
+{% block content %}
+    <div class="d-flex justify-content-custom">
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item ">Artes</li>
+            </ol>
+        </nav>
+    </div>
+
+
+    {% include 'system/includes/message.html' %}
+
+    <div class="d-flex justify-content-custom flex-wrap">
+        <button id="add_art" type="button" class="btn btn-custom-primary" data-url="{% url 'gallery:add_art' %}">
+            <i class="fa fa-plus"></i> Adicionar Obra de Arte
+        </button>
+
+        <form action="{% url 'gallery:show_art' %}" method="POST" >
+            {% csrf_token %}
+            <div class="search-button-wrapper">
+                <input type="search" id="" name="search" class="custom-search-input" placeholder="Título | Subtítulo | Descrição">
+                <button type="submit" class="custom-btn-search"> <span class="custom-btn-search-text">Procurar</span>
+                    <i class="fa fa-search"></i>
+                </button>
+            </div>
+        </form>
+    </div>
+
+    {% if arts.count > 0 %}
+
+        <div class="d-flex justify-content-custom flex-wrap">
+            {% for art in page %}
+                <div class="card">
+                    <img class="card-img-top custom-card-image" src="{{ art.image.url }}" alt="Card image cap">
+                    <div class="card-body">
+                        <h5 class="card-title text-center">{{ art.title }}</h5>
+                        <p>
+                            <button type="button" class="btn card-btn-custom-primary handle_tag" data-url="{% url 'gallery:art_tag' art.id %}" style="margin-right: 10px">
+                                <i class="fa fa-tags"></i> Etiquetas
+                            </button>
+                        </p>
+                        <p>
+                            <button type="button" class="btn card-btn-custom-secondary edit_art" data-url="{% url  'gallery:edit_art' art.id %}" style="margin-right: 10px">
+                                <i class="fa fa-edit"></i> Editar
+                            </button>
+                        </p>
+                        <p>
+                            <button type="button" class="btn card-btn-custom-danger delete_art" data-title="{{ art.title }}" data-url="{% url 'gallery:delete_art' art.id %}" style="margin-right: 10px">
+                                <i class="fa fa-trash-alt"></i> Excluir
+                            </button>
+                        </p>
+                        <p class="card-text text-center"><small class="text-muted">Adicionado em {{ art.created_at }}</small></p>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+
+        <div class="d-flex justify-content-center">
+            <div class="custom-pagination">
+                {% if page.has_previous %}
+                    <a href="?page=1">&laquo;</a>
+                    <a href="?page={{ page.previous_page_number }}">{{ page.previous_page_number }}</a>
+                {% endif %}
+                <a href="#" class="active">{{ page.number }}</a>
+                {% if page.has_next %}
+                    <a href="?page={{ page.next_page_number }}">{{ page.next_page_number }}</a>
+                    <a href="?page={{ page.paginator.num_pages }}">&raquo;</a>
+                {% endif %}
+            </div>
+        </div>
+    {% else %}
+        Não existem artes adicionadas.
+    {% endif %}
+
+    <div id="deleteModal" class="modal" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content custom-modal-content">
+                <div id="deleteModalBody" class="modal-body">
+                </div>
+
+                <div class="modal-footer">
+                    <button id="deleteModalConfirm" type="button" class="btn card-btn-custom-danger tx-13">Excluir</button>
+                    <button type="button" class="btn card-btn-custom-secondary" data-bs-dismiss="modal">Fechar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock content %}
+
+{% block contentjs %}
+    <script>
+        $('#add_art').click(function() {
+            window.location = $(this).attr('data-url');
+        });
+
+        $('.edit_art').click(function() {
+           window.location = $(this).attr('data-url');
+        });
+
+        $('.delete_art').click(function() {
+            const url = $(this).attr('data-url');
+            const title = $(this).attr('data-title');
+            console.log(url);
+            console.log(title);
+            $('#deleteModalTitle').text("Excluir Arte:");
+            $('#deleteModalBody').text("Você tem certeza que deseja excluir a arte: " + title + "?");
+            $('#deleteModalConfirm').attr("data-url", url);
+            $('#deleteModal').modal('show');
+        });
+
+        $( "#deleteModalConfirm" ).click(function () {
+            window.location = $(this).attr("data-url");
+        });
+
+        $('.handle_tag').click(function() {
+            window.location = $(this).attr("data-url");
+        });
+
+
+
+    </script>
+{% endblock contentjs %}

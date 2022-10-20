@@ -1,0 +1,47 @@
+{% extends 'website/base.html'%}
+
+{% block content %}
+    <div class="container about-wrapper">
+        <p> 
+            The main objective of this project was first and foremost to practice web development.
+            <br>
+            Development Stack:
+            <br>
+                &emsp;Database: MySQL 8.0
+                <br>
+                &emsp;Backend: Django/Python 
+                <br>
+                &emsp;Frontend: Bootstrap and JQuery
+                <br>
+                &emsp;Deployment: Google App Engine (GAE)
+                <br>
+                &emsp;VCS: GitHub
+                
+                (More @ LINK TO GITHUB PROJECT)
+            <br>
+            <br>
+
+           Secondly, to create a database of professional artists in general, aiming at Machine Learning/Pattern Recognition
+           to relate similar images, using algorithms such as TF-IDF, KNN and Dot Product. The items are registered using an underlying system.
+           Unfortunately the database does not have enough examples to implement a CNN yet, although once it reaches an considerable size
+           it will be done and all the data will be posted on Kaggle.
+           <br>
+           <br>
+           
+           The database was designed by myself. An image of the system model can be found at LINK_TO_ERR_IMAGE.
+           (You can find a little bit strange, but i did not use the Django User Model for the login.)
+           <br>
+           <br>
+           This project is currently being reworked, with a different stack of technologies, such as Docker, DjangoREST.
+        </p>
+        <br>
+        <br>
+        <br>
+        <h5> 
+            If you would like to publish your work here. You can use <a href="{% url 'website:contact' %}">this</a> contact form to send a link to where the files are stored at.
+            The more the detail about the art the better, such as materials used, in what/who it was inspired, the title and description for instance.
+            <br>
+            Remember that it can be anything, such as sculptures, tatoos, drawings, paintings etc.
+        </h5>
+    </div>
+{% endblock content %}
